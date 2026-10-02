@@ -1,0 +1,28 @@
+[project]
+name = "zero-to-shipped"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "David", email = "davidbritto54@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "awscrt>=0.37.0",
+    "fastapi>=0.142.2",
+    "strands-agents>=1.57.2",
+    "strands-agents-tools>=0.8.9",
+]
+
+[project.scripts]
+zero-to-shipped = "zero_to_shipped:main"
+
+[build-system]
+requires = ["uv_build>=0.12.19,<0.13.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+    "pytest-asyncio>=1.4.0",
+]
