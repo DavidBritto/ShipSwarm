@@ -4,47 +4,66 @@
 
 ## 1. System Architecture
 
-ShipSwarm AI is composed of an event-driven frontend dashboard communicating via HTTP and Server-Sent Events (SSE) with a FastAPI backend that hosts an AWS Strands Multi-Agent Swarm.
+ShipSwarm AI is composed of an event-driven frontend dashboard communicating via HTTP and Server-Sent Events (SSE) with a FastAPI backend that hosts the **Autonomous Cloud Engine** and the **Strands Multi-Agent Swarm**.
 
 ```mermaid
 flowchart TD
-    Client["Vite + React Dashboard"]
-    FastAPI["FastAPI Backend (/api/swarm/run)"]
+    Client["Vite + React Dashboard\n(Dual Mode: Build & Ship OR Audit)"]
+    FastAPI["FastAPI Backend\n(/api/build & /api/audit)"]
     SSE["SSE Event Stream"]
-    
-    subgraph Swarm ["AWS Strands Multi-Agent Swarm"]
+
+    subgraph AutonomousBuilder ["Phase 1: Autonomous Cloud Engine"]
+        direction TB
+        Ingest["Repo & Prompt Inspector\n(Natural Language / GitHub)"]
+        ArchAgent["Sentinel-Architect\n(AWS Topology Synthesis)"]
+        IaCEngine["IaC Engine\n(CloudFormation / CDK)"]
+        Deployer["AWS Deployer\n(Boto3 CloudFormation Provisioning)"]
+
+        Ingest --> ArchAgent
+        ArchAgent --> IaCEngine
+        IaCEngine --> Deployer
+    end
+
+    subgraph VerificationSwarm ["Phase 2: Strands Peer-to-Peer Verification"]
         direction LR
         Sec["Sentinel-Sec\n(Security Red-Team)"]
         Chaos["Sentinel-Chaos\n(Concurrency & Latency)"]
         CW["Sentinel-CloudWatch\n(AWS Telemetry)"]
-        Arch["Sentinel-Architect\n(Synthesis & Remediation)"]
-        
+        Healer["Sentinel-Architect\n(ShipScore & Self-Heal)"]
+
         Sec -->|handoff_to_agent| Chaos
         Chaos -->|handoff_to_agent| CW
-        CW -->|handoff_to_agent| Arch
+        CW -->|handoff_to_agent| Healer
     end
 
-    Target["Target App on AWS\n(Public HTTPS Endpoint)"]
-    AWS["AWS APIs\n(CloudWatch / Bedrock)"]
+    AWSCloud["Live AWS Infrastructure\n(API Gateway / Lambda / S3 / DynamoDB)"]
+    Bedrock["Amazon Bedrock\n(Nova Pro / Claude 3.5)"]
 
-    Client -->|POST /audit| FastAPI
-    FastAPI -->|Stream events| SSE --> Client
-    FastAPI --> Swarm
-    Sec -->|Active HTTP Probes| Target
-    Chaos -->|Async Burst Waves| Target
-    CW -->|boto3 CloudWatch| AWS
-    Swarm -->|Converse API| AWS
+    Client -->|POST /api/build or /api/audit| FastAPI
+    FastAPI -->|Live JSON SSE Events| SSE --> Client
+    FastAPI --> AutonomousBuilder
+    AutonomousBuilder -->|Deploy Stack| AWSCloud
+    AutonomousBuilder -->|Converse API| Bedrock
+    Deployer -->|Extract Target URL| VerificationSwarm
+    Sec -->|Red-Team Probes| AWSCloud
+    Chaos -->|Async Burst Waves| AWSCloud
+    CW -->|CloudWatch Telemetry| AWSCloud
+    Healer -->|If Failed: Auto-Remediate Patch| Deployer
 ```
 
 ## 2. Component Design
 
 ### 2.1 Backend Modules (`src/shipswarm/`)
+- `builder/repo_inspector.py`: Analyzes GitHub repositories (inspecting `package.json`, `pyproject.toml`, Dockerfiles, requirements) or parses natural language prompts into normalized app specifications.
+- `builder/architect_synthesizer.py`: Uses Bedrock to design optimal AWS architecture topologies (Serverless API vs Container vs Static Edge).
+- `builder/iac_generator.py`: Generates validated AWS CloudFormation / CDK templates with IAM least-privilege policies, CORS, and CloudWatch alarms.
+- `builder/aws_deployer.py`: Manages AWS CloudFormation stack lifecycle via Boto3, streaming stack creation events in real-time, capturing output URLs, and triggering rollbacks/patches upon failure.
 - `tools/security_prober.py`: Tool calling functions decorated with `@tool` for CORS, Security Headers, Auth token bypass heuristics, and error-disclosure checks using `httpx`.
 - `tools/chaos_prober.py`: Asynchronous concurrent runner executing HTTP burst waves (10, 25, 50 calls) measuring min, mean, p50, p95, p99 latencies and HTTP status codes.
 - `tools/aws_telemetry.py`: Boto3 queries for CloudWatch metrics (`AWS/ApiGateway`, `AWS/Lambda`, `AWS/ApplicationELB`) across a target time window.
 - `swarm/agents.py`: Definition of the 4 Strands agents using `BedrockModel` with custom system prompts, specialized tools, and auto-injected `handoff_to_agent`.
 - `swarm/orchestrator.py`: Initializer for `Swarm(nodes=[...], entry_point=sec_agent)` with event-listener hooks that emit structured SSE events.
-- `server/app.py`: FastAPI app with `/health`, `/api/audit` (SSE streaming), and `/api/export-patch`.
+- `server/app.py`: FastAPI app with `/health`, `/api/build` (deploy new stack), `/api/audit` (audit existing URL), and `/api/export-patch`.
 
 ### 2.2 Frontend Dashboard (`frontend/`)
 - `SwarmConsole`: Real-time terminal displaying peer handoffs, agent reasoning, and executed tools.

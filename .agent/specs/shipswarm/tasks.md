@@ -51,3 +51,21 @@
 - [x] **Task 5.2: Production Deployment & Public URL Verification**
   - Deploy to AWS and verify public HTTP 200 accessibility on S3 website URL.
   - Generate verbatim CLI deployment log in `deploy/aws_deployment_log.md`.
+
+## Phase 6: Autonomous Cloud Engine ("Zero to Shipped" Builder)
+- [ ] **Task 6.1: Dual Input Ingestion & App Archetype Classifier**
+  - Implement `src/shipswarm/builder/repo_inspector.py` to parse prompt requirements or fetch public GitHub repository dependencies.
+  - Add schemas for `BuildRequest` and `ArchitectureTopology`.
+- [ ] **Task 6.2: Strands Architect & IaC Generator Engine**
+  - Implement `src/shipswarm/builder/architect_synthesizer.py` and `src/shipswarm/builder/iac_generator.py` synthesizing valid AWS CloudFormation / CDK with IAM least-privilege.
+- [ ] **Task 6.3: Autonomous AWS Provisioning & SSE Pipeline**
+  - Implement `src/shipswarm/builder/aws_deployer.py` using Boto3 CloudFormation to deploy, monitor, and stream resource creation events.
+  - Connect `/api/build` endpoint to the SSE streaming orchestrator.
+- [ ] **Task 6.4: Closed-Loop Swarm Verification & Self-Healing**
+  - Wire output URL from newly deployed CloudFormation stack directly into the Sentinel-Sec and Sentinel-Chaos verification swarm.
+  - Auto-remediate failures by patching the template and redeploying.
+- [ ] **Task 6.5: Frontend Evolution: Mode Switcher & Pipeline Visualizer**
+  - Update UI with dual tabs: "Build & Ship (Zero to Shipped)" and "Audit Existing URL".
+  - Add interactive Architecture Diagram viewer and live CloudFormation event tracker.
+- [ ] **Task 6.6: AWS Cloud Re-deployment & Verification**
+  - Rebuild and upload updated frontend to S3 and invalidate CloudFront CDN.

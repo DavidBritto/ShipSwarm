@@ -1,8 +1,26 @@
 # Requirements: ShipSwarm AI
 
-> Autonomous Multi-Agent Production-Readiness & Hardening Swarm on AWS Strands
+> Autonomous Multi-Agent Cloud Creation & Operations Engine ("Zero to Shipped")
 
-## Feature: ShipSwarm AI Core Platform
+## Feature: ShipSwarm AI Autonomous Cloud Engine
+
+### User Story 0: Idea & GitHub Repository Ingestion
+As a founder or developer, I want to input a natural language product prompt or a GitHub repository URL so that the swarm can autonomously deduce required cloud services, runtime dependencies, and scaling targets.
+
+#### Acceptance Criteria (EARS)
+- **WHEN** the user inputs a natural language prompt or public GitHub repo URL **THE SYSTEM SHALL** parse application archetype (REST API, full-stack web, event-driven microservice) and persistence requirements.
+- **IF** the GitHub repository is private or unreachable **THEN THE SYSTEM SHALL** prompt for public access or fallback to prompt-driven architectural inference.
+- **WHILE** ingesting project specifications **THE SYSTEM SHALL** enforce security boundaries (reject malicious repository URLs or prompt injection payloads).
+- **AS SOON AS** ingestion finishes **THE SYSTEM SHALL** trigger handoff to Agent-Architect with normalized architecture parameters.
+
+### User Story 0.5: Autonomous IaC Synthesis & AWS Provisioning
+As a cloud builder with zero DevOps overhead, I want the swarm to synthesize production-ready AWS CloudFormation / CDK code and provision it directly to AWS so that I have a live, working URL in minutes.
+
+#### Acceptance Criteria (EARS)
+- **WHEN** Agent-Architect completes the topology specification **THE SYSTEM SHALL** generate syntactically valid CloudFormation / CDK templates adhering to AWS Well-Architected least-privilege standards.
+- **WHILE** provisioning is executing **THE SYSTEM SHALL** stream live AWS CloudFormation stack creation events (stack status, resource creation steps) via SSE to the client.
+- **IF** stack creation fails on AWS **THEN THE SYSTEM SHALL** capture CloudFormation failure events, invoke Agent-Architect to synthesize a patch, and retry deployment.
+- **AS SOON AS** the stack reaches `CREATE_COMPLETE` **THE SYSTEM SHALL** extract the public output endpoint (API Gateway URL / CloudFront domain) and route it to the Sentinel verification swarm.
 
 ### User Story 1: Target Endpoint Audit & Swarm Execution
 As a developer or founder shipping a newly deployed AWS application, I want to submit my public URL and architecture metadata so that an autonomous agent swarm can actively test its security, performance, and cloud health.
