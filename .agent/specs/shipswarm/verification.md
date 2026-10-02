@@ -27,20 +27,20 @@
   - [x] Sentinel-Architect synthesizes findings and generates remediation code (EARS WHEN).
   - [x] Downloadable remediation patch available via UI / endpoint (EARS WHERE).
 
-- [ ] **User Story 0: Idea & GitHub Repository Ingestion**
-  - [ ] Natural language prompt correctly parsed into architecture parameters (EARS WHEN).
-  - [ ] Public GitHub repository structure & dependencies inspected (EARS WHEN).
-  - [ ] Malicious URLs and prompt injection rejected (EARS WHILE).
+- [x] **User Story 0: Idea & GitHub Repository Ingestion**
+  - [x] Natural language prompt correctly parsed into architecture parameters (EARS WHEN).
+  - [x] Public GitHub repository structure & dependencies inspected (EARS WHEN).
+  - [x] Malicious URLs and prompt injection rejected (EARS WHILE).
 
-- [ ] **User Story 0.5: Autonomous IaC Synthesis & AWS Provisioning**
-  - [ ] Valid CloudFormation template generated for target topology (EARS WHEN).
-  - [ ] Stack creation streamed live over SSE to dashboard (EARS WHILE).
-  - [ ] Output URL cleanly routed into the Sentinel verification swarm upon CREATE_COMPLETE (EARS AS SOON AS).
+- [x] **User Story 0.5: Autonomous IaC Synthesis & AWS Provisioning**
+  - [x] Valid CloudFormation template generated for target topology (EARS WHEN).
+  - [x] Stack creation streamed live over SSE to dashboard (EARS WHILE).
+  - [x] Output URL cleanly routed into the Sentinel verification swarm upon CREATE_COMPLETE (EARS AS SOON AS).
 
 ## Code Quality & Standards
 - [x] Type annotations across all Python modules (`pyright` / Pydantic v2 compliant).
 - [x] No unhandled exceptions in agent tool executions.
-- [x] Comprehensive unit test coverage for tools and schemas (22 passing tests in pytest).
+- [x] Comprehensive unit test coverage for tools and schemas (28 passing tests in pytest).
 - [x] No secrets or hardcoded credentials in the repository.
 
 ## Hackathon Compliance & Ship Gate

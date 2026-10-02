@@ -2,11 +2,12 @@ import React, { useState } from 'react'
 import { Header } from './components/Header'
 import { AuditForm } from './components/AuditForm'
 import { SwarmConsole } from './components/SwarmConsole'
+import { ArchitectureView } from './components/ArchitectureView'
 import { ShipScoreCard } from './components/ShipScoreCard'
 import { FindingsList } from './components/FindingsList'
 import { TelemetryView } from './components/TelemetryView'
 import { RemediationModal } from './components/RemediationModal'
-import type { AuditReport, SwarmEvent } from './types'
+import type { AuditReport, SwarmEvent, BuildRequest, ArchitectureTopology, BuildReport } from './types'
 import { AlertCircle } from 'lucide-react'
 
 export const App: React.FC = () => {
@@ -14,8 +15,98 @@ export const App: React.FC = () => {
   const [activeAgent, setActiveAgent] = useState<string>('')
   const [isStreaming, setIsStreaming] = useState<boolean>(false)
   const [report, setReport] = useState<AuditReport | null>(null)
+  const [topology, setTopology] = useState<ArchitectureTopology | null>(null)
+  const [deployedEndpoint, setDeployedEndpoint] = useState<string | null>(null)
+  const [cfTemplate, setCfTemplate] = useState<string | null>(null)
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const [errorMsg, setErrorMsg] = useState<string | null>(null)
+
+  const handleStartBuild = async (buildRequest: BuildRequest) => {
+    setEvents([])
+    setReport(null)
+    setTopology(null)
+    setDeployedEndpoint(null)
+    setCfTemplate(null)
+    setErrorMsg(null)
+    setIsStreaming(true)
+    setActiveAgent('Agent-Ingest')
+
+    try {
+      const response = await fetch('/api/build/stream', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(buildRequest),
+      })
+
+      if (!response.ok) {
+        const errData = await response.json().catch(() => ({}))
+        throw new Error(errData.detail || `Server error HTTP ${response.status}`)
+      }
+
+      if (!response.body) {
+        throw new Error('Readable stream not supported by browser.')
+      }
+
+      const reader = response.body.getReader()
+      const decoder = new TextDecoder()
+      let buffer = ''
+
+      while (true) {
+        const { value, done } = await reader.read()
+        if (done) break
+
+        buffer += decoder.decode(value, { stream: true })
+        const lines = buffer.split('\n')
+        buffer = lines.pop() || ''
+
+        for (const line of lines) {
+          const trimmed = line.trim()
+          if (trimmed.startsWith('data:')) {
+            const jsonStr = trimmed.replace(/^data:\s*/, '')
+            try {
+              const eventObj: SwarmEvent = JSON.parse(jsonStr)
+              setEvents((prev) => [...prev, eventObj])
+
+              if (eventObj.agent_name) {
+                setActiveAgent(eventObj.agent_name)
+              }
+
+              // Capture topology if emitted by Sentinel-Architect
+              if (eventObj.payload?.services && eventObj.payload?.architecture_name) {
+                setTopology(eventObj.payload as ArchitectureTopology)
+              }
+
+              // Capture template if emitted by Agent-InfraEngine
+              if (eventObj.payload?.cloudformation_template) {
+                setCfTemplate(eventObj.payload.cloudformation_template)
+              }
+
+              // Capture deployed endpoint
+              if (eventObj.payload?.endpoint_url) {
+                setDeployedEndpoint(eventObj.payload.endpoint_url)
+              }
+
+              // Capture complete build report
+              if (eventObj.event_type === 'complete' && eventObj.payload) {
+                const bReport = eventObj.payload as BuildReport
+                if (bReport.topology) setTopology(bReport.topology)
+                if (bReport.deployed_endpoint_url) setDeployedEndpoint(bReport.deployed_endpoint_url)
+                if (bReport.cloudformation_template) setCfTemplate(bReport.cloudformation_template)
+                if (bReport.audit_report) setReport(bReport.audit_report)
+              }
+            } catch (err) {
+              console.warn('Failed to parse SSE JSON event:', jsonStr)
+            }
+          }
+        }
+      }
+    } catch (err: any) {
+      console.error('Build stream error:', err)
+      setErrorMsg(err.message || 'Autonomous build execution failed.')
+    } finally {
+      setIsStreaming(false)
+    }
+  }
 
   const handleStartAudit = async (
     targetUrl: string,
@@ -25,6 +116,9 @@ export const App: React.FC = () => {
   ) => {
     setEvents([])
     setReport(null)
+    setTopology(null)
+    setDeployedEndpoint(null)
+    setCfTemplate(null)
     setErrorMsg(null)
     setIsStreaming(true)
     setActiveAgent('Sentinel-Sec')
@@ -108,7 +202,7 @@ export const App: React.FC = () => {
               ShipSwarm AI
             </h1>
             <p className="text-sm text-slate-400 mt-1 max-w-2xl">
-              Eliminate post-deployment anxiety. A peer-to-peer swarm of 4 AWS Strands agents actively red-teams, stress-tests, and certifies newly shipped cloud applications on AWS.
+              From Idea or GitHub Repo to a fully provisioned, live AWS infrastructure with closed-loop multi-agent security and stress verification.
             </p>
           </div>
 
@@ -116,6 +210,10 @@ export const App: React.FC = () => {
             <div>
               <span className="text-slate-500 block">Framework:</span>
               <span className="text-white font-bold">AWS Strands SDK (Swarm)</span>
+            </div>
+            <div className="border-l border-slate-800 pl-3">
+              <span className="text-slate-500 block">Deployer:</span>
+              <span className="text-white font-bold">AWS CloudFormation</span>
             </div>
             <div className="border-l border-slate-800 pl-3">
               <span className="text-slate-500 block">LLM Engine:</span>
@@ -134,7 +232,11 @@ export const App: React.FC = () => {
         {/* Input Form & Real-time Console */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           <div className="lg:col-span-5">
-            <AuditForm onStartAudit={handleStartAudit} isLoading={isStreaming} />
+            <AuditForm
+              onStartAudit={handleStartAudit}
+              onStartBuild={handleStartBuild}
+              isLoading={isStreaming}
+            />
           </div>
 
           <div className="lg:col-span-7">
@@ -146,7 +248,18 @@ export const App: React.FC = () => {
           </div>
         </div>
 
-        {/* Completed Audit Results View */}
+        {/* Synthesized Architecture View */}
+        {topology && (
+          <div className="animate-in fade-in slide-in-from-bottom-6 duration-500">
+            <ArchitectureView
+              topology={topology}
+              endpointUrl={deployedEndpoint || undefined}
+              cfTemplate={cfTemplate || undefined}
+            />
+          </div>
+        )}
+
+        {/* Completed Verification Swarm Results View */}
         {report && (
           <div className="space-y-8 animate-in fade-in slide-in-from-bottom-6 duration-500">
             <ShipScoreCard

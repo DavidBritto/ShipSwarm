@@ -16,6 +16,27 @@ export const SwarmConsole: React.FC<SwarmConsoleProps> = ({ events, activeAgent,
   }, [events])
 
   const getAgentBadge = (agent: string) => {
+    if (agent.includes('Ingest')) {
+      return {
+        name: 'Agent-Ingest',
+        color: 'text-purple-400 bg-purple-500/10 border-purple-500/20',
+        icon: <Terminal className="h-3 w-3 inline mr-1 text-purple-400" />,
+      }
+    }
+    if (agent.includes('InfraEngine')) {
+      return {
+        name: 'Agent-InfraEngine',
+        color: 'text-cyan-400 bg-cyan-500/10 border-cyan-500/20',
+        icon: <Zap className="h-3 w-3 inline mr-1 text-cyan-400" />,
+      }
+    }
+    if (agent.includes('Deployer')) {
+      return {
+        name: 'Agent-Deployer',
+        color: 'text-indigo-400 bg-indigo-500/10 border-indigo-500/20',
+        icon: <Award className="h-3 w-3 inline mr-1 text-indigo-400" />,
+      }
+    }
     if (agent.includes('Sec')) {
       return {
         name: 'Sentinel-Sec',
@@ -45,10 +66,10 @@ export const SwarmConsole: React.FC<SwarmConsoleProps> = ({ events, activeAgent,
   }
 
   const agents = [
-    { id: 'Sentinel-Sec', label: '1. Sec Prober', icon: Shield, color: 'text-rose-400' },
-    { id: 'Sentinel-Chaos', label: '2. Chaos & Latency', icon: Zap, color: 'text-teal-400' },
-    { id: 'Sentinel-CloudWatch', label: '3. CloudWatch', icon: Activity, color: 'text-sky-400' },
-    { id: 'Sentinel-Architect', label: '4. Architect Lead', icon: Award, color: 'text-emerald-400' },
+    { id: 'Agent-Ingest', label: '1. Ingest', icon: Terminal, color: 'text-purple-400' },
+    { id: 'Sentinel-Architect', label: '2. Architect', icon: Award, color: 'text-emerald-400' },
+    { id: 'Agent-Deployer', label: '3. Cloud Deploy', icon: Award, color: 'text-indigo-400' },
+    { id: 'Sentinel-Sec', label: '4. Strands Sentinels', icon: Shield, color: 'text-rose-400' },
   ]
 
   return (

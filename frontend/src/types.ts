@@ -64,3 +64,32 @@ export interface SwarmEvent {
   payload?: any
   timestamp: number
 }
+
+export interface ArchitectureTopology {
+  architecture_name: string
+  app_archetype: 'api' | 'web' | 'serverless' | 'event-driven'
+  services: string[]
+  rationale: string
+  cost_estimate_monthly_usd: number
+  diagram_mermaid: string
+}
+
+export interface BuildReport {
+  project_name: string
+  stack_name: string
+  deployed_endpoint_url?: string
+  topology: ArchitectureTopology
+  cloudformation_template: string
+  audit_report?: AuditReport
+  status: 'SUCCESS' | 'FAILED'
+  error_message?: string
+}
+
+export interface BuildRequest {
+  prompt?: string
+  github_repo_url?: string
+  project_name: string
+  aws_region: string
+  auto_verify: boolean
+  dry_run: boolean
+}

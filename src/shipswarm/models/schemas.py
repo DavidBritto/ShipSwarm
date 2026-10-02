@@ -156,3 +156,51 @@ class AuditReport(BaseModel):
     findings: List[Finding] = Field(default_factory=list)
     remediation_patch: str = Field("", description="CDK or code patch fixing issues")
     executive_summary: str = Field("", description="Architect synthesis narrative")
+
+
+class BuildRequest(BaseModel):
+    """Payload to initiate autonomous cloud creation and deployment."""
+
+    prompt: Optional[str] = Field(None, description="Natural language specification of the application to build")
+    github_repo_url: Optional[str] = Field(None, description="Public GitHub repository URL to inspect and deploy")
+    project_name: str = Field("shipswarm-app", description="Project identifier / CloudFormation stack base name")
+    aws_region: str = Field("us-east-1", description="Target AWS region")
+    auto_verify: bool = Field(True, description="Automatically trigger Sentinel verification swarm upon deploy")
+    dry_run: bool = Field(False, description="Simulate CloudFormation provisioning without touching live AWS")
+
+    @model_validator(mode="after")
+    def validate_inputs(self) -> "BuildRequest":
+        if not self.prompt and not self.github_repo_url:
+            raise ValueError("Either 'prompt' or 'github_repo_url' must be provided.")
+        if self.github_repo_url:
+            parsed = urlparse(self.github_repo_url.strip())
+            if parsed.scheme not in ("http", "https") or not parsed.netloc:
+                raise ValueError("Invalid GitHub repository URL.")
+        # Sanitize project_name to alphanumeric + hyphens
+        import re
+        self.project_name = re.sub(r"[^a-zA-Z0-9-]", "-", self.project_name).strip("-").lower() or "shipswarm-app"
+        return self
+
+
+class ArchitectureTopology(BaseModel):
+    """Synthesized AWS architecture designed by Sentinel-Architect."""
+
+    architecture_name: str
+    app_archetype: Literal["api", "web", "serverless", "event-driven"] = "serverless"
+    services: List[str] = Field(default_factory=list)
+    rationale: str
+    cost_estimate_monthly_usd: float = 0.0
+    diagram_mermaid: str = ""
+
+
+class BuildReport(BaseModel):
+    """Result of an autonomous cloud build, provisioning, and verification cycle."""
+
+    project_name: str
+    stack_name: str
+    deployed_endpoint_url: Optional[str] = None
+    topology: ArchitectureTopology
+    cloudformation_template: str
+    audit_report: Optional[AuditReport] = None
+    status: Literal["SUCCESS", "FAILED"] = "SUCCESS"
+    error_message: Optional[str] = None

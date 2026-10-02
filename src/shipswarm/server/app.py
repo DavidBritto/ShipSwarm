@@ -9,7 +9,14 @@ from fastapi.middleware.cors import CORSMiddleware
 from sse_starlette.sse import EventSourceResponse
 
 from shipswarm import __version__
-from shipswarm.models.schemas import AuditReport, AuditRequest, SwarmEvent
+from shipswarm.builder.orchestrator import CloudEngineOrchestrator
+from shipswarm.models.schemas import (
+    AuditReport,
+    AuditRequest,
+    BuildReport,
+    BuildRequest,
+    SwarmEvent,
+)
 from shipswarm.swarm.orchestrator import ShipSwarmOrchestrator
 
 
@@ -31,6 +38,7 @@ def create_app() -> FastAPI:
     )
 
     orchestrator = ShipSwarmOrchestrator()
+    cloud_engine = CloudEngineOrchestrator()
 
     @app.get("/health")
     async def health_check():
@@ -42,6 +50,29 @@ def create_app() -> FastAPI:
             "swarm": "online",
             "provider": "aws-strands",
         }
+
+    @app.post("/api/build/stream")
+    async def stream_build(request: BuildRequest):
+        """Stream autonomous cloud building, provisioning, and verification over SSE."""
+        async def event_generator() -> AsyncGenerator[dict, None]:
+            try:
+                async for event in cloud_engine.stream_build(request):
+                    yield {
+                        "event": event.event_type.value,
+                        "data": event.model_dump_json(),
+                    }
+            except Exception as exc:
+                err_event = SwarmEvent(
+                    event_type="error",
+                    agent_name="CloudEngine",
+                    message=f"Autonomous build error: {exc}",
+                )
+                yield {
+                    "event": "error",
+                    "data": err_event.model_dump_json(),
+                }
+
+        return EventSourceResponse(event_generator())
 
     @app.post("/api/audit", response_model=AuditReport)
     async def run_audit(request: AuditRequest) -> AuditReport:
