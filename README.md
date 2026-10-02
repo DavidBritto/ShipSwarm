@@ -91,8 +91,8 @@ The complete application is deployed and live globally on AWS:
 
 ### 1. Clone & Install Dependencies
 ```bash
-git clone https://github.com/your-username/zero-to-shipped.git
-cd zero-to-shipped
+git clone https://github.com/DavidBritto/ShipSwarm.git
+cd ShipSwarm
 
 # Install Python backend dependencies with uv
 uv sync

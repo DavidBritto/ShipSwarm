@@ -104,7 +104,7 @@ To make the demo bulletproof on static hosting, we also built a resilient client
 ## Try It Out & Get Involved
 
 * **Live App**: [https://d8zyfvd7p1wi8.cloudfront.net](https://d8zyfvd7p1wi8.cloudfront.net)
-* **GitHub Repository**: [zero-to-shipped](https://github.com/your-username/zero-to-shipped)
+* **GitHub Repository**: [DavidBritto/ShipSwarm](https://github.com/DavidBritto/ShipSwarm)
 * **All Tests Passing**: 28 unit and integration tests verifying Bedrock synthesis, CloudFormation provisioning, and Strands swarm handoffs.
 
 *Ship fast, ship safe, and conquer deployment anxiety with ShipSwarm AI!*
