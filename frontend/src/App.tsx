@@ -103,7 +103,7 @@ export const App: React.FC = () => {
             try {
               const eventObj: SwarmEvent = JSON.parse(jsonStr)
               processEvent(eventObj)
-            } catch (err) {
+            } catch {
               console.warn('Failed to parse SSE JSON event:', jsonStr)
             }
           }
@@ -119,118 +119,6 @@ export const App: React.FC = () => {
       } catch (simErr: any) {
         setErrorMsg(simErr.message || 'Execution failed.')
       }
-    } finally {
-      setIsStreaming(false)
-    }
-  }
-
-  const handleStartAudit = async (
-    targetUrl: string,
-    region: string,
-    appType: string,
-    service: string
-  ) => {
-    setEvents([])
-    setReport(null)
-    setTopology(null)
-    setDeployedEndpoint(null)
-    setCfTemplate(null)
-    setErrorMsg(null)
-    setIsStreaming(true)
-    setActiveAgent('Sentinel-Sec')
-
-    try {
-      const response = await fetch('/api/audit/stream', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          target_url: targetUrl,
-          aws_region: region,
-          app_type: appType,
-          aws_service: service,
-          allow_test_hosts: true,
-        }),
-      })
-
-      if (!response.ok) {
-        throw new Error(`Audit endpoint returned HTTP ${response.status}`)
-      }
-
-      if (!response.body) {
-        throw new Error('Readable stream not supported.')
-      }
-
-      const reader = response.body.getReader()
-      const decoder = new TextDecoder()
-      let buffer = ''
-
-      while (true) {
-        const { value, done } = await reader.read()
-        if (done) break
-
-        buffer += decoder.decode(value, { stream: true })
-        const lines = buffer.split('\n')
-        buffer = lines.pop() || ''
-
-        for (const line of lines) {
-          const trimmed = line.trim()
-          if (trimmed.startsWith('data:')) {
-            const jsonStr = trimmed.replace(/^data:\s*/, '')
-            try {
-              const eventObj: SwarmEvent = JSON.parse(jsonStr)
-              processEvent(eventObj)
-              if (eventObj.event_type === 'complete' && eventObj.payload) {
-                setReport(eventObj.payload as AuditReport)
-              }
-            } catch (err) {
-              console.warn('Failed to parse SSE event:', jsonStr)
-            }
-          }
-        }
-      }
-    } catch (err: any) {
-      console.warn('Audit backend unreachable, generating client-side certification:', err)
-      // Provide immediate fallback audit report
-      setReport({
-        target_url: targetUrl,
-        ship_score: 92,
-        grade: 'A',
-        security_score: 90,
-        performance_score: 94,
-        reliability_score: 92,
-        latency: {
-          sample_count: 20,
-          p50_ms: 28,
-          p95_ms: 45,
-          p99_ms: 58,
-          min_ms: 18,
-          max_ms: 62,
-          error_percentage: 0,
-          status_codes: { '200': 20 },
-        },
-        cloudwatch: {
-          invocations: 20,
-          error_count: 0,
-          error_rate: 0,
-          avg_duration_ms: 22,
-          throttles: 0,
-          region,
-        },
-        findings: [
-          {
-            id: 'AUDIT-SEC-01',
-            severity: 'LOW',
-            category: 'SECURITY',
-            title: 'Content Security Policy Recommendation',
-            description: 'Target endpoint does not explicitly define Content-Security-Policy headers.',
-            evidence: 'Header Content-Security-Policy was null in HTTP response.',
-            remediation_code: 'Content-Security-Policy: default-src "self"; frame-ancestors "none"',
-            agent_source: 'Sentinel-Sec',
-          },
-        ],
-        remediation_patch: '# Recommended Security Header Patch\nheaders["Content-Security-Policy"] = "default-src \'self\'"',
-        executive_summary: `ShipSwarm audit evaluated ${targetUrl} with ShipScore 92/100 (Grade A). Target endpoint is production-ready.`,
-      })
     } finally {
       setIsStreaming(false)
     }
@@ -317,7 +205,6 @@ export const App: React.FC = () => {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
             <div className="lg:col-span-5">
               <AuditForm
-                onStartAudit={handleStartAudit}
                 onStartBuild={handleStartBuild}
                 isLoading={isStreaming}
               />

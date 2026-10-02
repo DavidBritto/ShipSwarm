@@ -1,37 +1,37 @@
-# 🎨 1-Shot Cover Banner Prompt for ChatGPT / DALL-E 3 & Midjourney
+# 🎨 Official Cover Banner Prompt & Asset Guide
 
-Use this prompt to generate the official cover banner for the **AWS Builder Center post** and the **GitHub Repository header**. It is carefully engineered to work on the first try with **DALL-E 3** inside ChatGPT Plus, adhering to the 16:9 wide landscape format and avoiding any garbled AI text artifacts.
+This document contains the prompt engineered for the **AWS Builder Center post** and the **GitHub Repository header**, along with the generated high-resolution banner.
 
 ---
 
-## 📌 The Exact Prompt (Copy & Paste directly into ChatGPT)
+## 🖼️ Generated Banner Preview
+
+The banner has been generated in ultra-wide 16:9 aspect ratio and is saved at:
+- `banner.jpg` (Repository root)
+- `frontend/public/banner.jpg` (Frontend public assets)
+
+![ShipSwarm Banner](./banner.jpg)
+
+---
+
+## 📌 Master Prompt (ChatGPT Plus / DALL-E 3 & Imagen 3)
 
 ```text
-A cinematic, ultra-wide 16:9 banner illustration showcasing the concept of "From Amorphous Chaos to Crystalline Cloud Architecture."
-
-On the left side of the composition, an ethereal, shapeless, amorphous nebula of swirling iridescent liquid particles, fluid purple and cyan cosmic smoke, and untamed raw energy floats in deep space, representing an unformed idea and chaotic raw code.
-
-In the center, a luminous wave of transformation takes place: four sleek, autonomous geometric sentinel drones cast focused beams of radiant emerald green and electric cyan laser light into the chaos, organizing and forging the particles.
-
-On the right side, the chaotic matter fully crystallizes into a breathtaking, immaculate 3D serverless cloud architecture: glowing modular glass cubes, translucent circuit conduits, floating serverless monoliths, and precision geometric nodes linked by laser-sharp emerald fiber-optic conduits.
-
-Atmosphere: Pitch-black obsidian background, dramatic volumetric rim lighting, glowing neon emerald and cyan accents, subtle holographic caustics, Unreal Engine 5 architectural render, hyper-detailed, clean 3D isometric perspective, photorealistic glass reflections, 8k resolution, wide landscape banner format. 
-
-CRITICAL: Do NOT include any legible text, letters, words, logos, or typography anywhere in the image. Pure visual metaphor only.
+A breathtaking, ultra-wide 16:9 cinematic banner for AWS Zero to Shipped hackathon. Dark obsidian futuristic environment with a dramatic transformation from left to right: on the left side, swirling ethereal nebula of amorphous deep purple, indigo and cyan cosmic smoke representing chaotic unformed code; in the center, sleek autonomous geometric sentinel drones with glowing emerald green laser beams organizing the chaos; on the right side, pristine crystalline 3D isometric AWS serverless cloud architecture consisting of luminous frosted glass cubes, glowing emerald circuit pathways, floating serverless monoliths, and laser-sharp fiber optic conduits. Unreal Engine 5 architectural render, volumetric lighting, photorealistic glass reflections, 8k resolution, clean minimal cybernetic aesthetic. No text, no letters, no words, no watermark.
 ```
 
 ---
 
-## 🛠️ Settings & Tips for Best Results in ChatGPT
-
-1. **Aspect Ratio**: If using DALL-E 3 via API or prompt parameter, ensure `--ar 16:9` or prompt ChatGPT: *"Generate this in wide landscape 16:9 ratio"*.
-2. **No Text Rule**: The prompt explicitly commands DALL-E not to render text. This prevents the classic AI misspelling bugs on covers.
-3. **Overlaying Titles (Post-Production)**: Because the image has a pitch-black obsidian base with the focal transformation in the center, you can easily use Canva, Figma, or Photoshop to drop your clean SVG title (`ShipSwarm AI | Zero to Shipped`) in pure white without competing with background clutter.
-
----
-
-## 🚀 Alternative for Midjourney v6 (if available)
+## 🚀 Alternative for Midjourney v6
 
 ```text
 /imagine prompt: cinematic ultra-wide banner, from amorphous chaotic liquid nebula on the left to crystalline glowing serverless cloud architecture on the right, autonomous sentinel drones guiding laser beams, translucent glass cubes and glowing emerald conduits, deep obsidian black background, volumetric lighting, Octane render, no text, no words --ar 16:9 --v 6.0 --style raw
 ```
+
+---
+
+## 🛠️ Instructions for Submission Posts
+
+1. **Aspect Ratio**: Always use 16:9 landscape format for AWS Builder Center and DevPost cover headers.
+2. **Text-Free Clean Slate**: Notice there is zero rendered text on the image. This guarantees zero AI typography glitches.
+3. **Overlaying Titles**: You can use Figma, Canva, or Photoshop to drop your clean title (`ShipSwarm AI | Zero to Shipped`) in pure white (`#FFFFFF`) with a subtle drop shadow directly onto the upper-left or center-top area.
