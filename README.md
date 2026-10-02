@@ -1,131 +1,134 @@
-# 🛸 ShipSwarm AI — Autonomous Production-Readiness Swarm
+# ⚡ ShipSwarm AI — Autonomous Cloud Engine & Verification Swarm
+
+[![AWS Zero to Shipped Hackathon](https://img.shields.io/badge/AWS_Hackathon-Zero_to_Shipped_2026-orange.svg?logo=amazon-aws)](https://builder.aws.com)
+[![Amazon Bedrock](https://img.shields.io/badge/Amazon_Bedrock-Claude_3.5_&_Nova-blueviolet.svg)](https://aws.amazon.com/bedrock/)
+[![AWS Strands Agents](https://img.shields.io/badge/AWS_Strands-Multi--Agent_Swarm-10b981.svg)](https://github.com/awslabs)
+[![Live Global CDN](https://img.shields.io/badge/CloudFront_Live-https://d8zyfvd7p1wi8.cloudfront.net-06b6d4.svg)](https://d8zyfvd7p1wi8.cloudfront.net)
+[![Tests Passing](https://img.shields.io/badge/pytest-28%20passed-success.svg)](tests/)
 
 > **Submission for the AWS Zero to Shipped Hackathon 2026**  
 > *Category:* **Workplace Efficiency / Commercial Potential** • *Lane:* **Startups**  
-> *Live AWS Endpoint:* [http://shipswarm-frontend-585929637997.s3-website-us-east-1.amazonaws.com](http://shipswarm-frontend-585929637997.s3-website-us-east-1.amazonaws.com)  
-> *Global CloudFront HTTPS:* [https://d8zyfvd7p1wi8.cloudfront.net](https://d8zyfvd7p1wi8.cloudfront.net)  
+> *Global CloudFront Live App:* [https://d8zyfvd7p1wi8.cloudfront.net](https://d8zyfvd7p1wi8.cloudfront.net)  
+> *S3 Static Origin:* [http://shipswarm-frontend-585929637997.s3-website-us-east-1.amazonaws.com](http://shipswarm-frontend-585929637997.s3-website-us-east-1.amazonaws.com)  
 > *Agent Deployment Proof:* [`deploy/aws_deployment_log.md`](deploy/aws_deployment_log.md)
 
 ---
 
-## 🎯 The Problem: Conquering "Deployment Anxiety"
+## 💡 The Core Philosophy: "From Chaos to Production"
 
-The core manifesto of the AWS Zero to Shipped hackathon is helping developers ship fast. But the moment an MVP is deployed to AWS, **deployment anxiety** sets in:
+Every great cloud project starts as **something amorphous**—a raw thought, a bulleted list of requirements, or a scrappy GitHub repository with no infrastructure. 
 
-* Did I misconfigure CORS or expose an open wildcard with credentials?
-* Did I forget security headers (HSTS, CSP, X-Frame-Options) that leave the app vulnerable to clickjacking or MIME sniffing?
-* Will a concurrent spike in traffic trigger cascading cold starts or a 5xx meltdown on my API Gateway / Lambda?
-* Who monitors and stress-tests my application if I am a solo developer or an early-stage startup without a dedicated DevOps, SecOps, or QA team?
+Between that amorphous idea and a live, hardened production system lies **Deployment Anxiety**:
+- *Which AWS services should I pick without over-engineering?*
+- *How do I craft least-privilege IAM execution roles so I don't leave my account vulnerable?*
+- *Is my CloudFormation or CDK template syntactically sound and drift-free?*
+- *Once deployed, who tests for CORS leaks, missing security headers, or concurrency cold starts?*
 
-**ShipSwarm AI solves this.** It unleashes an autonomous peer-to-peer swarm of 4 specialized AI agents built with the **AWS Strands Agents SDK** and **Amazon Bedrock** that actively red-teams, stress-tests, and certifies newly shipped cloud applications on AWS.
+**ShipSwarm AI solves the entire lifecycle in under 70 seconds.** It takes amorphous intent, synthesizes a Well-Architected AWS topology, generates validated CloudFormation IaC, provisions the live stack via Boto3, and immediately red-teams the newly deployed endpoint with a peer-to-peer swarm of 4 autonomous Strands agents.
 
 ---
 
-## 🧠 The Architecture: AWS Strands Peer-to-Peer Swarm
+## 🏛️ Two-Phase Closed-Loop Architecture
 
-ShipSwarm AI implements the **Swarm Pattern** from the newly released AWS Strands Agents SDK (`strands.multiagent.swarm.Swarm`). Instead of a rigid, hardcoded pipeline, agents collaborate peer-to-peer using dynamic `handoff_to_agent`:
+```mermaid
+flowchart TD
+    subgraph Phase1["Phase 1: Autonomous Cloud Engine (Zero to Shipped Builder)"]
+        User["Amorphous Idea / Prompt or GitHub URL"] --> Ingest["Agent-Ingest (Repo & Intent Inspector)"]
+        Ingest --> Bedrock["Bedrock Architect Synthesizer (Well-Architected Framework)"]
+        Bedrock --> IaC["IaC Generator (Valid CloudFormation + Least-Privilege IAM)"]
+        IaC --> Deployer["AWS Deployer (Live Boto3 CloudFormation Provisioning)"]
+    end
 
-```
-┌────────────────────────────────────────────────────────────────────────┐
-│                   Vite + React Dashboard (Live UI)                     │
-│               (Real-Time SSE Event Stream & ShipScore™)                │
-└───────────────────────────────────┬────────────────────────────────────┘
-                                    │ HTTP / Server-Sent Events (SSE)
-┌───────────────────────────────────▼────────────────────────────────────┐
-│                         FastAPI Backend Server                         │
-└───────────────────────────────────┬────────────────────────────────────┘
-                                    │
-       ┌────────────────────────────┴────────────────────────────┐
-       │             AWS Strands Peer-to-Peer Swarm              │
-       │                                                         │
-       │   [Sentinel-Sec] ────handoff───► [Sentinel-Chaos]       │
-       │          ▲                              │               │
-       │       handoff                        handoff            │
-       │          │                              ▼               │
-       │   [Sentinel-Architect] ◄──handoff──── [Sentinel-CW]     │
-       └──────────────┬──────────────────────────┬───────────────┘
-                      │                          │
-               Amazon Bedrock             AWS MCP / Boto3
-             (Claude / Nova Pro)        (CloudWatch Telemetry)
+    subgraph Phase2["Phase 2: Closed-Loop Swarm Verification (AWS Strands SDK)"]
+        Deployer -->|"Live Endpoint Hand-off"| Sec["Sentinel-Sec (CORS, HSTS, CSP Prober)"]
+        Sec -->|"Dynamic Handoff"| Chaos["Sentinel-Chaos (Burst Wave Latency & p99)"]
+        Chaos -->|"Dynamic Handoff"| CW["Sentinel-CloudWatch (AWS CloudWatch Telemetry)"]
+        CW -->|"Dynamic Handoff"| Arch["Sentinel-Architect (ShipScore™ & Remediation Patch)"]
+    end
+
+    Arch --> Cert["Production Certification (ShipScore 0-100 & CDK Patches)"]
 ```
 
-### The 4 Peer Agents
+---
 
-1. **🛡️ Sentinel-Sec (Red-Team Security Prober):**
-   * Actively audits the public endpoint for missing critical security headers (`Strict-Transport-Security`, `Content-Security-Policy`, `X-Frame-Options`, `X-Content-Type-Options`).
-   * Probes CORS configuration against unauthorized origins to catch wildcard/reflected origin vulnerabilities.
-   * Checks error responses for stack trace disclosures and internal environment leaks.
-   * Executes dynamic handoff to Sentinel-Chaos with the baseline security profile.
+## 🤖 The Multi-Agent Swarm
 
-2. **⚡ Sentinel-Chaos (Concurrency & Latency Stress Tester):**
-   * Fires concurrent async HTTP burst waves (15-50 requests).
-   * Calculates response metrics: **p50 (median)**, **p95 (tail latency)**, **p99 (spike)**, and error percentages.
-   * Detects serverless cold-start degradation heuristics.
-   * Executes dynamic handoff to Sentinel-CloudWatch with the burst time window.
+ShipSwarm AI combines **Amazon Bedrock** (Claude 3.5 Sonnet / Amazon Nova) with the **AWS Strands Agents SDK** (`strands.multiagent.swarm.Swarm`):
 
-3. **📊 Sentinel-CloudWatch (AWS Cloud Telemetry Auditor):**
-   * Queries real-time server-side CloudWatch metrics (`AWS/ApiGateway`, `AWS/Lambda`) across the evaluation window via Boto3 / AWS MCP.
-   * Tracks total invocations, 5xx server errors, average durations, and throttles.
-   * Executes dynamic handoff to Sentinel-Architect with correlated infrastructure telemetry.
+### 1. The Autonomous Builder Pipeline
+* **`Agent-Ingest` (`repo_inspector.py`)**: Analyzes product requirements or clones and inspects public GitHub repositories (detecting Python, Node.js, FastAPI, static frontends, and dependencies).
+* **`Architect-Synthesizer` (`architect_synthesizer.py`)**: Uses Amazon Bedrock to synthesize an AWS Well-Architected topology (API Gateway v2 HTTP API + AWS Lambda Python 3.12 + Amazon DynamoDB on-demand + IAM least-privilege) with estimated monthly costs.
+* **`IaC-Generator` (`iac_generator.py`)**: Emits pristine AWS CloudFormation templates with decoupled parameters, resource references, log groups, and least-privilege role policies.
+* **`AWS-Deployer` (`aws_deployer.py`)**: Connects to AWS via Boto3, provisions or dry-runs the CloudFormation stack, streams live stack events, and captures output endpoint URLs.
 
-4. **🏆 Sentinel-Architect (Chief Synthesis & Certification Officer):**
-   * Synthesizes all evidence from its peer agents.
-   * Computes the normalized **ShipScore™ (0 to 100)** and assigns a production readiness letter grade (**A through F**).
-   * Generates actionable, production-ready **AWS CDK (Python)** and **FastAPI / CloudFront middleware** remediation patches.
+### 2. The Strands Sentinel Swarm
+* **`Sentinel-Sec` (`security_agent.py`)**: Audits security headers (`Strict-Transport-Security`, `Content-Security-Policy`, `X-Frame-Options`, `X-Content-Type-Options`) and probes CORS against wildcard vulnerabilities.
+* **`Sentinel-Chaos` (`chaos_agent.py`)**: Fires concurrent async HTTP bursts (15-50 requests), calculates p50, p95, p99 tail latency, and diagnoses cold starts.
+* **`Sentinel-CloudWatch` (`telemetry_agent.py`)**: Audits server-side CloudWatch metrics (`AWS/ApiGateway`, `AWS/Lambda`), tracking invocations, 5xx server errors, durations, and throttles.
+* **`Sentinel-Architect` (`remediation_agent.py`)**: Computes the normalized **ShipScore™ (0-100)**, assigns a letter grade (A-F), and outputs automated **AWS CDK and middleware remediation patches**.
 
 ---
 
-## 🚀 Live Demo & Deployment (The Ship Gate)
+## 🌐 Live CloudFront Production Deployment
 
-* **S3 Static Website (Active & Live):**  
-  👉 [http://shipswarm-frontend-585929637997.s3-website-us-east-1.amazonaws.com](http://shipswarm-frontend-585929637997.s3-website-us-east-1.amazonaws.com)
-* **CloudFront CDN Distribution:**  
-  👉 [https://d8zyfvd7p1wi8.cloudfront.net](https://d8zyfvd7p1wi8.cloudfront.net)
-* **Full Deployment CLI Log:** See [`deploy/aws_deployment_log.md`](deploy/aws_deployment_log.md) for verbatim proof of the coding agent connecting to AWS and provisioning resources.
+The complete application is deployed and live globally on AWS:
+
+* **Global HTTPS URL**: [https://d8zyfvd7p1wi8.cloudfront.net](https://d8zyfvd7p1wi8.cloudfront.net)
+* **S3 Static Hosting Origin**: `shipswarm-frontend-585929637997` (us-east-1)
+* **CloudFront Distribution**: `E32SRSMQI9XROF`
+* **Autonomous Fallback Engine**: Includes a resilient client-side simulation engine in [`frontend/src/utils/clientEngine.ts`](frontend/src/utils/clientEngine.ts) that allows anyone to experience the full 70-second autonomous lifecycle directly in the browser even without live backend credentials.
 
 ---
 
-## 🛠️ Quickstart (Run Locally)
+## 🚀 Quickstart (Local Development)
 
 ### Prerequisites
 * Python 3.12+ with [`uv`](https://docs.astral.sh/uv/)
 * Node.js v20+ with npm
+* AWS CLI configured (`aws configure`) with Bedrock and CloudFormation access
 
-### 1. Install Backend Dependencies
+### 1. Clone & Install Dependencies
 ```bash
+git clone https://github.com/your-username/zero-to-shipped.git
+cd zero-to-shipped
+
+# Install Python backend dependencies with uv
 uv sync
+
+# Install frontend dependencies
+cd frontend && npm install && cd ..
 ```
 
-### 2. Run Test Suite (22 Unit & Integration Tests)
+### 2. Run Test Suite (28 Unit & Integration Tests)
 ```bash
-uv run pytest tests/
-```
-```
-tests/test_api.py ...                                                    [ 13%]
-tests/test_aws_telemetry.py ..                                           [ 22%]
-tests/test_chaos_prober.py ...                                           [ 36%]
-tests/test_schemas.py .....                                              [ 59%]
-tests/test_security_prober.py ......                                     [ 86%]
-tests/test_swarm.py ...                                                  [100%]
-
-============================= 22 passed in 10.90s ==============================
+uv run pytest tests/ -v
 ```
 
-### 3. Build Frontend & Launch Full-Stack Server
+### 3. Launch Backend & Frontend
 ```bash
-# Build the React/Tailwind frontend
-cd frontend && npm install && npm run build && cd ..
+# Terminal 1: FastAPI SSE Server
+uv run uvicorn shipswarm.server.app:app --host 0.0.0.0 --port 8000 --reload
 
-# Launch the unified FastAPI + Strands server
-uv run uvicorn shipswarm.server.app:app --host 0.0.0.0 --port 8000
+# Terminal 2: Vite React Studio
+cd frontend
+npm run dev
 ```
-Open your browser at `http://localhost:8000` to interact with the live Swarm Console.
+Open [http://localhost:5173](http://localhost:5173) in your browser.
 
 ---
 
-## 🏆 Why ShipSwarm AI Deserves to Win
+## 📦 AWS Services Used
 
-1. **Directly addresses the hackathon core thesis:** Transforms "deployment anxiety" into verifiable confidence on Day 0.
-2. **Powered by AWS's flagship framework:** Leverages the official **AWS Strands Agents SDK** with peer-to-peer swarms and Bedrock integration.
-3. **Real Engineering over Prompts:** Executes genuine network probing, concurrency measurements, and CloudWatch metrics — not a generic text wrapper.
-4. **Passes the Ship Gate with Honors:** 100% deployed on AWS with verified public URLs and documented coding agent execution logs.
+* **Amazon Bedrock**: Powering architecture synthesis, topology decisions, and remediation code generation.
+* **AWS Strands Agents SDK**: Orchestrating autonomous peer-to-peer agent handoffs (`strands.multiagent.swarm.Swarm`).
+* **AWS CloudFormation**: Declarative infrastructure as code generation and live automated stack deployments.
+* **Amazon CloudWatch**: Real-time telemetry, log groups, and runtime metrics.
+* **Amazon CloudFront & Amazon S3**: Global edge distribution and static web hosting with automated cache invalidation.
+* **AWS Lambda & Amazon API Gateway**: Target serverless execution environment.
+* **Amazon DynamoDB**: On-demand serverless persistence tier.
+
+---
+
+## 📄 License & Attribution
+
+Built with ❤️ for the **AWS Zero to Shipped Hackathon 2026**. Licensed under the Apache 2.0 License.

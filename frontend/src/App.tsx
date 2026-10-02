@@ -8,7 +8,7 @@ import { FindingsList } from './components/FindingsList'
 import { TelemetryView } from './components/TelemetryView'
 import { RemediationModal } from './components/RemediationModal'
 import { FeaturesBento } from './components/FeaturesBento'
-import { PrismHeroBeam } from './components/PrismHeroBeam'
+import { AmorphousToArchitecture } from './components/AmorphousToArchitecture'
 import { simulateBuildStream } from './utils/clientEngine'
 import type { AuditReport, SwarmEvent, BuildRequest, ArchitectureTopology, BuildReport } from './types'
 import { AlertCircle, Sparkles, ArrowDown } from 'lucide-react'
@@ -240,12 +240,9 @@ export const App: React.FC = () => {
     <div className="authkit-bg min-h-screen text-zinc-100 flex flex-col font-sans selection:bg-emerald-400 selection:text-black">
       <Header />
 
-      {/* 1. Grand Hero Section (Next.js Conf 3D Prism & Optical Light Beam) */}
-      <section className="relative pt-28 pb-24 md:pt-40 md:pb-36 overflow-hidden">
-        {/* Optical Light Beam & Refraction Canvas */}
-        <PrismHeroBeam />
-
-        <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-10">
+      {/* 1. Grand Hero Section: From Amorphous Idea to Well-Architected AWS */}
+      <section className="relative pt-20 pb-16 md:pt-28 md:pb-24 overflow-hidden">
+        <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-8">
           {/* Chromatic Next.js Conf Pill Badge */}
           <div className="inline-flex">
             <div className="chromatic-badge px-4 py-1.5 flex items-center space-x-2 text-xs font-mono shadow-[0_0_24px_rgba(6,182,212,0.25)]">
@@ -257,18 +254,21 @@ export const App: React.FC = () => {
           </div>
 
           {/* Big Keynote Headline */}
-          <div className="space-y-6">
-            <h1 className="text-6xl sm:text-8xl md:text-8xl font-black tracking-[-0.04em] leading-[1.0] bg-gradient-to-b from-white via-zinc-100 to-zinc-500 bg-clip-text text-transparent">
+          <div className="space-y-4">
+            <h1 className="text-5xl sm:text-7xl md:text-8xl font-black tracking-[-0.04em] leading-[1.0] bg-gradient-to-b from-white via-zinc-100 to-zinc-500 bg-clip-text text-transparent">
               From Idea to Production on AWS.
             </h1>
-            <p className="text-xl sm:text-2xl font-light text-zinc-300 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-lg sm:text-2xl font-light text-zinc-300 max-w-2xl mx-auto leading-relaxed">
               Zero to Shipped in 70 seconds with an autonomous multi-agent swarm.
             </p>
           </div>
 
           <p className="text-sm text-zinc-400 max-w-xl mx-auto leading-relaxed font-normal">
-            Eliminate deployment anxiety. We design your serverless architecture, generate least-privilege CloudFormation IaC, deploy live AWS stacks, and red-team them with security swarms.
+            Turn raw, unstructured intent or repositories into certified serverless infrastructure with Bedrock and autonomous Sentinel swarms.
           </p>
+
+          {/* Interactive Amorphous to Crystalline Architecture Visualization */}
+          <AmorphousToArchitecture />
 
           {/* Keynote Metrics Bar */}
           <div className="pt-4 flex flex-wrap items-center justify-center gap-4 sm:gap-8 text-xs font-mono text-zinc-300">
