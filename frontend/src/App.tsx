@@ -8,6 +8,7 @@ import { FindingsList } from './components/FindingsList'
 import { TelemetryView } from './components/TelemetryView'
 import { RemediationModal } from './components/RemediationModal'
 import { FeaturesBento } from './components/FeaturesBento'
+import { PrismHeroBeam } from './components/PrismHeroBeam'
 import { simulateBuildStream } from './utils/clientEngine'
 import type { AuditReport, SwarmEvent, BuildRequest, ArchitectureTopology, BuildReport } from './types'
 import { AlertCircle, Sparkles, ArrowDown } from 'lucide-react'
@@ -239,59 +240,64 @@ export const App: React.FC = () => {
     <div className="authkit-bg min-h-screen text-zinc-100 flex flex-col font-sans selection:bg-emerald-400 selection:text-black">
       <Header />
 
-      {/* 1. Grand Hero Section (More air, more breathability!) */}
-      <section className="relative pt-24 pb-20 md:pt-32 md:pb-28 overflow-hidden">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-8">
-          {/* Badge */}
-          <div className="inline-flex items-center space-x-2 text-xs font-mono text-emerald-400 bg-emerald-500/10 px-4 py-1.5 rounded-full border border-emerald-500/30 shadow-[0_0_20px_rgba(16,185,129,0.25)]">
-            <Sparkles className="h-3.5 w-3.5" />
-            <span className="font-semibold">Introducing ShipSwarm AI</span>
-            <span className="text-zinc-600">•</span>
-            <span className="text-zinc-400">AWS Zero to Shipped</span>
+      {/* 1. Grand Hero Section (Next.js Conf 3D Prism & Optical Light Beam) */}
+      <section className="relative pt-28 pb-24 md:pt-40 md:pb-36 overflow-hidden">
+        {/* Optical Light Beam & Refraction Canvas */}
+        <PrismHeroBeam />
+
+        <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-10">
+          {/* Chromatic Next.js Conf Pill Badge */}
+          <div className="inline-flex">
+            <div className="chromatic-badge px-4 py-1.5 flex items-center space-x-2 text-xs font-mono shadow-[0_0_24px_rgba(6,182,212,0.25)]">
+              <Sparkles className="h-3.5 w-3.5 text-cyan-400 animate-pulse" />
+              <span className="font-semibold text-white tracking-wide">ShipSwarm AI</span>
+              <span className="text-zinc-600">•</span>
+              <span className="text-emerald-400 font-medium">AWS Zero to Shipped Hackathon</span>
+            </div>
           </div>
 
-          {/* Big Airy Headline */}
-          <div className="space-y-4">
-            <h1 className="text-5xl sm:text-7xl font-black tracking-tight leading-[1.08] bg-gradient-to-b from-white via-zinc-100 to-zinc-400 bg-clip-text text-transparent">
+          {/* Big Keynote Headline */}
+          <div className="space-y-6">
+            <h1 className="text-6xl sm:text-8xl md:text-8xl font-black tracking-[-0.04em] leading-[1.0] bg-gradient-to-b from-white via-zinc-100 to-zinc-500 bg-clip-text text-transparent">
               From Idea to Production on AWS.
             </h1>
-            <p className="text-xl sm:text-2xl font-normal text-zinc-400 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-xl sm:text-2xl font-light text-zinc-300 max-w-2xl mx-auto leading-relaxed">
               Zero to Shipped in 70 seconds with an autonomous multi-agent swarm.
             </p>
           </div>
 
-          <p className="text-sm text-zinc-500 max-w-xl mx-auto leading-relaxed">
-            Eliminate deployment anxiety. We design your serverless architecture, generate least-privilege CloudFormation IaC, deploy the live stack, and attack it with red-team security swarms.
+          <p className="text-sm text-zinc-400 max-w-xl mx-auto leading-relaxed font-normal">
+            Eliminate deployment anxiety. We design your serverless architecture, generate least-privilege CloudFormation IaC, deploy live AWS stacks, and red-team them with security swarms.
           </p>
 
-          {/* Quick Metrics Bar */}
-          <div className="pt-6 flex flex-wrap items-center justify-center gap-6 sm:gap-10 text-xs font-mono text-zinc-400">
-            <div className="flex items-center space-x-2">
+          {/* Keynote Metrics Bar */}
+          <div className="pt-4 flex flex-wrap items-center justify-center gap-4 sm:gap-8 text-xs font-mono text-zinc-300">
+            <div className="flex items-center space-x-2 px-3 py-1.5 rounded-lg bg-white/[0.03] border border-white/[0.08] backdrop-blur-sm shadow-[0_0_12px_rgba(16,185,129,0.15)]">
               <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#10b981]" />
               <span>4 Strands Agents</span>
             </div>
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2 px-3 py-1.5 rounded-lg bg-white/[0.03] border border-white/[0.08] backdrop-blur-sm shadow-[0_0_12px_rgba(6,182,212,0.15)]">
               <span className="h-2 w-2 rounded-full bg-cyan-400 shadow-[0_0_8px_#06b6d4]" />
               <span>100% Serverless IaC</span>
             </div>
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2 px-3 py-1.5 rounded-lg bg-white/[0.03] border border-white/[0.08] backdrop-blur-sm shadow-[0_0_12px_rgba(99,102,241,0.15)]">
               <span className="h-2 w-2 rounded-full bg-indigo-400 shadow-[0_0_8px_#6366f1]" />
               <span>Amazon Bedrock</span>
             </div>
-            <div className="flex items-center space-x-2">
-              <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#10b981]" />
+            <div className="flex items-center space-x-2 px-3 py-1.5 rounded-lg bg-white/[0.03] border border-white/[0.08] backdrop-blur-sm shadow-[0_0_12px_rgba(244,63,94,0.15)]">
+              <span className="h-2 w-2 rounded-full bg-rose-400 shadow-[0_0_8px_#f43f5e]" />
               <span>Sub-50ms Latency</span>
             </div>
           </div>
 
-          {/* Scroll Down Hint */}
-          <div className="pt-8">
+          {/* Scroll Down CTA */}
+          <div className="pt-6">
             <a
               href="#studio-section"
-              className="inline-flex items-center space-x-2 text-xs font-mono text-zinc-500 hover:text-emerald-400 transition-colors"
+              className="inline-flex items-center space-x-2 text-xs font-mono text-zinc-400 hover:text-emerald-400 transition-colors group"
             >
-              <span>Explore Interactive Studio</span>
-              <ArrowDown className="h-3.5 w-3.5 animate-bounce" />
+              <span className="border-b border-zinc-700 group-hover:border-emerald-400 pb-0.5">Explore Autonomous Studio</span>
+              <ArrowDown className="h-3.5 w-3.5 animate-bounce text-emerald-400" />
             </a>
           </div>
         </div>
