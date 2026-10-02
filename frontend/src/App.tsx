@@ -100,8 +100,8 @@ export const App: React.FC = () => {
         {/* Hero Section */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800/80 pb-6">
           <div>
-            <div className="inline-flex items-center space-x-2 text-xs font-mono text-amber-400 bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/20 mb-2">
-              <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
+            <div className="inline-flex items-center space-x-2 text-xs font-mono text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20 mb-2">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
               <span>AWS Zero to Shipped Hackathon Showcase</span>
             </div>
             <h1 className="text-3xl sm:text-4xl font-black text-white tracking-tight">

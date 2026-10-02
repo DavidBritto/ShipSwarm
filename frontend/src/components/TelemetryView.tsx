@@ -13,7 +13,7 @@ export const TelemetryView: React.FC<TelemetryViewProps> = ({ latency, cloudwatc
       {/* Concurrency & Latency Stress Telemetry */}
       <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 shadow-xl">
         <div className="flex items-center space-x-2 mb-4">
-          <Gauge className="h-5 w-5 text-amber-400" />
+          <Gauge className="h-5 w-5 text-emerald-400" />
           <h3 className="text-base font-bold text-white">
             Concurrency & Latency Benchmarks
           </h3>
@@ -28,7 +28,7 @@ export const TelemetryView: React.FC<TelemetryViewProps> = ({ latency, cloudwatc
 
           <div className="bg-slate-950 border border-slate-800 p-3 rounded-xl">
             <span className="text-[10px] font-mono text-slate-500 uppercase block">p95 Tail</span>
-            <span className={`text-lg font-bold font-mono ${latency.p95_ms > 500 ? 'text-rose-400' : 'text-amber-400'}`}>
+            <span className={`text-lg font-bold font-mono ${latency.p95_ms > 500 ? 'text-rose-400' : 'text-emerald-400'}`}>
               {latency.p95_ms}
             </span>
             <span className="text-[10px] text-slate-500 font-mono ml-1">ms</span>

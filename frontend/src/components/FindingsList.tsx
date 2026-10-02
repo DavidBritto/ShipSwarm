@@ -55,7 +55,7 @@ export const FindingsList: React.FC<FindingsListProps> = ({ findings }) => {
               onClick={() => setFilter(lvl)}
               className={`px-2.5 py-1 rounded-lg transition-all ${
                 filter === lvl
-                  ? 'bg-amber-500 text-slate-950 font-bold'
+                  ? 'bg-emerald-500 text-slate-950 font-bold'
                   : 'text-slate-400 hover:text-white'
               }`}
             >

@@ -26,8 +26,8 @@ export const SwarmConsole: React.FC<SwarmConsoleProps> = ({ events, activeAgent,
     if (agent.includes('Chaos')) {
       return {
         name: 'Sentinel-Chaos',
-        color: 'text-amber-400 bg-amber-500/10 border-amber-500/20',
-        icon: <Zap className="h-3 w-3 inline mr-1 text-amber-400" />,
+        color: 'text-teal-400 bg-teal-500/10 border-teal-500/20',
+        icon: <Zap className="h-3 w-3 inline mr-1 text-teal-400" />,
       }
     }
     if (agent.includes('CloudWatch')) {
@@ -46,7 +46,7 @@ export const SwarmConsole: React.FC<SwarmConsoleProps> = ({ events, activeAgent,
 
   const agents = [
     { id: 'Sentinel-Sec', label: '1. Sec Prober', icon: Shield, color: 'text-rose-400' },
-    { id: 'Sentinel-Chaos', label: '2. Chaos & Latency', icon: Zap, color: 'text-amber-400' },
+    { id: 'Sentinel-Chaos', label: '2. Chaos & Latency', icon: Zap, color: 'text-teal-400' },
     { id: 'Sentinel-CloudWatch', label: '3. CloudWatch', icon: Activity, color: 'text-sky-400' },
     { id: 'Sentinel-Architect', label: '4. Architect Lead', icon: Award, color: 'text-emerald-400' },
   ]
@@ -56,13 +56,13 @@ export const SwarmConsole: React.FC<SwarmConsoleProps> = ({ events, activeAgent,
       {/* Console Header with Peer-to-Peer Pipeline Tracker */}
       <div className="bg-slate-900/90 border-b border-slate-800 px-4 py-3 flex flex-wrap items-center justify-between gap-2">
         <div className="flex items-center space-x-2">
-          <Terminal className="h-4 w-4 text-amber-400" />
+          <Terminal className="h-4 w-4 text-emerald-400" />
           <span className="font-mono text-xs font-semibold text-slate-200">
             Strands Swarm Deliberation Console
           </span>
           {isStreaming && (
-            <span className="flex items-center space-x-1 text-[10px] font-mono text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20">
-              <span className="h-1.5 w-1.5 rounded-full bg-amber-400 animate-ping" />
+            <span className="flex items-center space-x-1 text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-ping" />
               <span>LIVE PEER HANDOFF</span>
             </span>
           )}
@@ -78,7 +78,7 @@ export const SwarmConsole: React.FC<SwarmConsoleProps> = ({ events, activeAgent,
                 <div
                   className={`flex items-center space-x-1 px-2 py-0.5 rounded border transition-all ${
                     isActive
-                      ? 'bg-slate-800 border-amber-500/50 shadow-sm text-white font-bold'
+                      ? 'bg-slate-800 border-emerald-500/50 shadow-sm text-white font-bold'
                       : 'text-slate-500 border-transparent'
                   }`}
                 >
@@ -114,7 +114,7 @@ export const SwarmConsole: React.FC<SwarmConsoleProps> = ({ events, activeAgent,
                 key={index}
                 className={`p-2 rounded-lg border transition-all ${
                   isHandoff
-                    ? 'bg-amber-950/20 border-amber-500/30 text-amber-200'
+                    ? 'bg-emerald-950/20 border-emerald-500/30 text-emerald-200'
                     : isFinding
                     ? 'bg-rose-950/20 border-rose-500/30 text-rose-200'
                     : isMetric

@@ -39,7 +39,7 @@ export const RemediationModal: React.FC<RemediationModalProps> = ({
         {/* Header */}
         <div className="bg-slate-950 border-b border-slate-800 px-6 py-4 flex items-center justify-between">
           <div className="flex items-center space-x-2.5">
-            <div className="p-2 rounded-lg bg-amber-500/10 text-amber-400 border border-amber-500/20">
+            <div className="p-2 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
               <FileCode2 className="h-5 w-5" />
             </div>
             <div>
@@ -72,7 +72,7 @@ export const RemediationModal: React.FC<RemediationModalProps> = ({
 
             <button
               onClick={handleDownload}
-              className="px-3 py-1.5 rounded-lg bg-amber-500 text-slate-950 font-bold text-xs font-mono flex items-center space-x-1.5 hover:bg-amber-400 transition-colors shadow-sm"
+              className="px-3 py-1.5 rounded-lg bg-emerald-500 text-slate-950 font-bold text-xs font-mono flex items-center space-x-1.5 hover:bg-emerald-400 transition-colors shadow-sm"
             >
               <Download className="h-3.5 w-3.5" />
               <span>Download .patch</span>
@@ -97,7 +97,7 @@ export const RemediationModal: React.FC<RemediationModalProps> = ({
         {/* Footer */}
         <div className="bg-slate-950 border-t border-slate-800 px-6 py-3 flex items-center justify-between text-xs text-slate-500 font-mono">
           <span>Apply via: git apply shipswarm_remediation.patch or copy into your CDK stack</span>
-          <span className="text-amber-400 font-bold">AWS Well-Architected Compliant</span>
+          <span className="text-emerald-400 font-bold">AWS Well-Architected Compliant</span>
         </div>
       </div>
     </div>

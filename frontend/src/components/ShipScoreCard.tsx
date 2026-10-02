@@ -39,7 +39,7 @@ export const ShipScoreCard: React.FC<ShipScoreCardProps> = ({ report, onExportPa
 
           <div>
             <div className="flex items-center space-x-2">
-              <span className="text-xs font-mono uppercase tracking-wider text-amber-400 font-bold">
+              <span className="text-xs font-mono uppercase tracking-wider text-emerald-400 font-bold">
                 Certification Result
               </span>
               <span className="text-xs text-slate-500">•</span>
@@ -58,9 +58,9 @@ export const ShipScoreCard: React.FC<ShipScoreCardProps> = ({ report, onExportPa
 
         <button
           onClick={onExportPatch}
-          className="w-full md:w-auto px-5 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs flex items-center justify-center space-x-2 border border-slate-700 hover:border-amber-500/50 shadow-md transition-all"
+          className="w-full md:w-auto px-5 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs flex items-center justify-center space-x-2 border border-slate-700 hover:border-emerald-500/50 shadow-md transition-all"
         >
-          <Download className="h-4 w-4 text-amber-400" />
+          <Download className="h-4 w-4 text-emerald-400" />
           <span>Export Remediation Patch</span>
         </button>
       </div>
@@ -86,14 +86,14 @@ export const ShipScoreCard: React.FC<ShipScoreCardProps> = ({ report, onExportPa
         <div className="bg-slate-950/60 border border-slate-800/80 rounded-xl p-4">
           <div className="flex items-center justify-between text-xs mb-2">
             <span className="text-slate-400 flex items-center space-x-1.5 font-medium">
-              <Zap className="h-3.5 w-3.5 text-amber-400" />
+              <Zap className="h-3.5 w-3.5 text-emerald-400" />
               <span>Concurrency & Latency</span>
             </span>
-            <span className="font-mono font-bold text-amber-400">{report.performance_score}%</span>
+            <span className="font-mono font-bold text-emerald-400">{report.performance_score}%</span>
           </div>
           <div className="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
             <div
-              className="bg-amber-500 h-1.5 rounded-full transition-all duration-500"
+              className="bg-emerald-500 h-1.5 rounded-full transition-all duration-500"
               style={{ width: `${report.performance_score}%` }}
             />
           </div>
