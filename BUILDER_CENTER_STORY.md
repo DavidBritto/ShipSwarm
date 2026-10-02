@@ -2,6 +2,8 @@
 
 *Published on AWS Builder Center • Category: Startups & Workplace Efficiency • Authors: ShipSwarm Team*
 
+![From Amorphous Chaos to Crystalline Architecture](./banner.jpg)
+
 ---
 
 ## The Spark: Overcoming "Deployment Anxiety"

@@ -12,6 +12,8 @@
 > *S3 Static Origin:* [http://shipswarm-frontend-585929637997.s3-website-us-east-1.amazonaws.com](http://shipswarm-frontend-585929637997.s3-website-us-east-1.amazonaws.com)  
 > *Agent Deployment Proof:* [`deploy/aws_deployment_log.md`](deploy/aws_deployment_log.md)
 
+![ShipSwarm AI Official Banner](./banner.jpg)
+
 ---
 
 ## 💡 The Core Philosophy: "From Chaos to Production"
