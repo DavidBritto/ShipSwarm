@@ -73,16 +73,16 @@ export const SwarmConsole: React.FC<SwarmConsoleProps> = ({ events, activeAgent,
   ]
 
   return (
-    <div className="bg-slate-950 border border-slate-800 rounded-2xl overflow-hidden shadow-2xl flex flex-col h-[520px]">
+    <div className="authkit-card rounded-2xl overflow-hidden shadow-2xl flex flex-col h-[520px]">
       {/* Console Header with Peer-to-Peer Pipeline Tracker */}
-      <div className="bg-slate-900/90 border-b border-slate-800 px-4 py-3 flex flex-wrap items-center justify-between gap-2">
+      <div className="bg-black/50 border-b border-white/[0.06] px-4 py-3 flex flex-wrap items-center justify-between gap-2">
         <div className="flex items-center space-x-2">
           <Terminal className="h-4 w-4 text-emerald-400" />
-          <span className="font-mono text-xs font-semibold text-slate-200">
+          <span className="font-mono text-xs font-semibold text-zinc-200">
             Strands Swarm Deliberation Console
           </span>
           {isStreaming && (
-            <span className="flex items-center space-x-1 text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
+            <span className="flex items-center space-x-1 text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20 shadow-[0_0_8px_rgba(16,185,129,0.2)]">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-ping" />
               <span>LIVE PEER HANDOFF</span>
             </span>
@@ -97,17 +97,17 @@ export const SwarmConsole: React.FC<SwarmConsoleProps> = ({ events, activeAgent,
             return (
               <React.Fragment key={ag.id}>
                 <div
-                  className={`flex items-center space-x-1 px-2 py-0.5 rounded border transition-all ${
+                  className={`flex items-center space-x-1 px-2.5 py-1 rounded-lg border transition-all ${
                     isActive
-                      ? 'bg-slate-800 border-emerald-500/50 shadow-sm text-white font-bold'
-                      : 'text-slate-500 border-transparent'
+                      ? 'bg-zinc-800/90 border-emerald-500/40 shadow-[0_0_10px_rgba(16,185,129,0.15)] text-white font-bold'
+                      : 'text-zinc-500 border-transparent hover:text-zinc-400'
                   }`}
                 >
                   <Icon className={`h-3 w-3 ${ag.color}`} />
                   <span className="hidden md:inline">{ag.label}</span>
                 </div>
                 {idx < agents.length - 1 && (
-                  <ArrowRight className="h-2.5 w-2.5 text-slate-600" />
+                  <ArrowRight className="h-2.5 w-2.5 text-zinc-600" />
                 )}
               </React.Fragment>
             )
@@ -116,7 +116,7 @@ export const SwarmConsole: React.FC<SwarmConsoleProps> = ({ events, activeAgent,
       </div>
 
       {/* Terminal Event Stream Body */}
-      <div className="flex-1 p-4 overflow-y-auto font-mono text-xs space-y-2 bg-[#060910]">
+      <div className="flex-1 p-4 overflow-y-auto font-mono text-xs space-y-2 bg-[#04060a]">
         {events.length === 0 ? (
           <div className="h-full flex flex-col items-center justify-center text-slate-600 space-y-2">
             <Terminal className="h-8 w-8 stroke-1 text-slate-700" />

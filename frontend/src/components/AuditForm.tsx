@@ -67,18 +67,18 @@ export const AuditForm: React.FC<AuditFormProps> = ({
   ]
 
   return (
-    <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 shadow-xl relative overflow-hidden">
-      <div className="absolute top-0 right-0 -mt-8 -mr-8 w-48 h-48 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none" />
+    <div className="authkit-card rounded-2xl p-6 shadow-2xl relative overflow-hidden">
+      <div className="absolute top-0 right-0 -mt-10 -mr-10 w-48 h-48 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
 
       {/* Mode Navigation Tabs */}
-      <div className="flex items-center space-x-1 bg-slate-950 p-1 rounded-xl border border-slate-800 mb-6 font-mono text-xs">
+      <div className="flex items-center space-x-1 bg-black/60 p-1 rounded-xl border border-white/[0.07] mb-6 font-mono text-xs">
         <button
           type="button"
           onClick={() => setActiveTab('build')}
           className={`flex-1 py-2 px-3 rounded-lg flex items-center justify-center space-x-1.5 transition-all ${
             activeTab === 'build'
-              ? 'bg-emerald-500 text-slate-950 font-bold shadow-md'
-              : 'text-slate-400 hover:text-white'
+              ? 'bg-emerald-500 text-[#021a12] font-bold shadow-[0_0_12px_rgba(16,185,129,0.3)]'
+              : 'text-zinc-400 hover:text-white'
           }`}
         >
           <Sparkles className="h-3.5 w-3.5" />
@@ -90,8 +90,8 @@ export const AuditForm: React.FC<AuditFormProps> = ({
           onClick={() => setActiveTab('audit')}
           className={`flex-1 py-2 px-3 rounded-lg flex items-center justify-center space-x-1.5 transition-all ${
             activeTab === 'audit'
-              ? 'bg-emerald-500 text-slate-950 font-bold shadow-md'
-              : 'text-slate-400 hover:text-white'
+              ? 'bg-emerald-500 text-[#021a12] font-bold shadow-[0_0_12px_rgba(16,185,129,0.3)]'
+              : 'text-zinc-400 hover:text-white'
           }`}
         >
           <Globe className="h-3.5 w-3.5" />
@@ -104,7 +104,7 @@ export const AuditForm: React.FC<AuditFormProps> = ({
         <form onSubmit={handleBuildSubmit} className="space-y-4">
           <div>
             <div className="flex items-center justify-between mb-1.5">
-              <label className="block text-xs font-mono uppercase text-slate-400">
+              <label className="block text-xs font-mono uppercase text-zinc-400">
                 Product Prompt or Feature Idea
               </label>
               <span className="text-[10px] font-mono text-emerald-400">Natural Language</span>
@@ -114,12 +114,12 @@ export const AuditForm: React.FC<AuditFormProps> = ({
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
               placeholder="Describe what you want to ship (e.g. 'Serverless subscription billing API with DynamoDB and API Gateway')..."
-              className="w-full bg-slate-950 border border-slate-700/80 rounded-xl p-3 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 font-mono transition-all resize-none"
+              className="authkit-input w-full rounded-xl p-3 text-xs text-zinc-100 placeholder-zinc-500 font-mono transition-all resize-none"
             />
 
             {/* Quick Presets */}
             <div className="mt-2 flex flex-wrap items-center gap-1.5 text-[11px] font-mono">
-              <span className="text-slate-500">Presets:</span>
+              <span className="text-zinc-500">Presets:</span>
               {promptPresets.map((preset, idx) => (
                 <button
                   key={idx}
@@ -128,7 +128,7 @@ export const AuditForm: React.FC<AuditFormProps> = ({
                     setPrompt(preset.prompt)
                     setProjectName(preset.name)
                   }}
-                  className="px-2 py-0.5 rounded bg-slate-950 border border-slate-800 text-slate-300 hover:text-emerald-400 hover:border-emerald-500/40 transition-colors"
+                  className="px-2.5 py-1 rounded-lg bg-zinc-900/80 border border-white/[0.06] text-zinc-300 hover:text-emerald-400 hover:border-emerald-500/40 transition-colors shadow-sm"
                 >
                   {preset.title}
                 </button>
@@ -137,8 +137,8 @@ export const AuditForm: React.FC<AuditFormProps> = ({
           </div>
 
           <div>
-            <label className="block text-xs font-mono uppercase text-slate-400 mb-1.5 flex items-center space-x-1">
-              <GitBranch className="h-3.5 w-3.5 text-slate-400" />
+            <label className="block text-xs font-mono uppercase text-zinc-400 mb-1.5 flex items-center space-x-1">
+              <GitBranch className="h-3.5 w-3.5 text-zinc-400" />
               <span>Public GitHub Repo (Optional alternative)</span>
             </label>
             <input
@@ -146,13 +146,13 @@ export const AuditForm: React.FC<AuditFormProps> = ({
               value={githubUrl}
               onChange={(e) => setGithubUrl(e.target.value)}
               placeholder="https://github.com/fastapi/fastapi (optional)"
-              className="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-3 py-2 text-xs text-slate-200 placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 font-mono"
+              className="authkit-input w-full rounded-xl px-3 py-2 text-xs text-zinc-200 placeholder-zinc-600 font-mono"
             />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-mono uppercase text-slate-400 mb-1.5">
+              <label className="block text-xs font-mono uppercase text-zinc-400 mb-1.5">
                 Stack Identifier Slug
               </label>
               <input
@@ -161,18 +161,18 @@ export const AuditForm: React.FC<AuditFormProps> = ({
                 value={projectName}
                 onChange={(e) => setProjectName(e.target.value)}
                 placeholder="my-cool-api"
-                className="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 font-mono"
+                className="authkit-input w-full rounded-xl px-3 py-2 text-xs text-zinc-200 font-mono"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-mono uppercase text-slate-400 mb-1.5">
+              <label className="block text-xs font-mono uppercase text-zinc-400 mb-1.5">
                 AWS Region
               </label>
               <select
                 value={buildRegion}
                 onChange={(e) => setBuildRegion(e.target.value)}
-                className="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 font-mono"
+                className="authkit-input w-full rounded-xl px-3 py-2 text-xs text-zinc-200 font-mono"
               >
                 <option value="us-east-1">us-east-1 (N. Virginia)</option>
                 <option value="us-west-2">us-west-2 (Oregon)</option>
@@ -182,13 +182,13 @@ export const AuditForm: React.FC<AuditFormProps> = ({
           </div>
 
           {/* Options */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-1 text-xs font-mono text-slate-400">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-1 text-xs font-mono text-zinc-400">
             <label className="flex items-center space-x-2 cursor-pointer">
               <input
                 type="checkbox"
                 checked={autoVerify}
                 onChange={(e) => setAutoVerify(e.target.checked)}
-                className="rounded bg-slate-950 border-slate-700 text-emerald-500 focus:ring-0"
+                className="rounded bg-black border-zinc-700 text-emerald-500 focus:ring-0"
               />
               <span>Auto-verify with Strands Swarm</span>
             </label>
@@ -198,7 +198,7 @@ export const AuditForm: React.FC<AuditFormProps> = ({
                 type="checkbox"
                 checked={dryRun}
                 onChange={(e) => setDryRun(e.target.checked)}
-                className="rounded bg-slate-950 border-slate-700 text-emerald-500 focus:ring-0"
+                className="rounded bg-black border-zinc-700 text-emerald-500 focus:ring-0"
               />
               <span>Instant Dry-Run (Preview)</span>
             </label>
@@ -207,7 +207,7 @@ export const AuditForm: React.FC<AuditFormProps> = ({
           <button
             type="submit"
             disabled={isLoading || (!prompt.trim() && !githubUrl.trim())}
-            className="w-full mt-2 py-3.5 px-6 rounded-xl font-bold text-sm bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 text-slate-950 hover:brightness-110 active:brightness-95 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-emerald-500/20 flex items-center justify-center space-x-2 transition-all"
+            className="authkit-btn-primary w-full mt-2 py-3.5 px-6 rounded-xl font-bold text-sm flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
           >
             {isLoading ? (
               <>
@@ -235,19 +235,19 @@ export const AuditForm: React.FC<AuditFormProps> = ({
               value={targetUrl}
               onChange={(e) => setTargetUrl(e.target.value)}
               placeholder="https://api.my-startup-mvp.com or https://d1abc.cloudfront.net"
-              className="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-4 py-3 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 font-mono transition-all"
+              className="authkit-input w-full rounded-xl px-4 py-3 text-sm text-zinc-100 placeholder-zinc-500 font-mono transition-all"
             />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div>
-              <label className="block text-xs font-mono uppercase text-slate-400 mb-1.5">
+              <label className="block text-xs font-mono uppercase text-zinc-400 mb-1.5">
                 AWS Region
               </label>
               <select
                 value={auditRegion}
                 onChange={(e) => setAuditRegion(e.target.value)}
-                className="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-3 py-2.5 text-xs text-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 font-mono"
+                className="authkit-input w-full rounded-xl px-3 py-2.5 text-xs text-zinc-200 font-mono"
               >
                 <option value="us-east-1">us-east-1 (N. Virginia)</option>
                 <option value="us-west-2">us-west-2 (Oregon)</option>
@@ -256,13 +256,13 @@ export const AuditForm: React.FC<AuditFormProps> = ({
             </div>
 
             <div>
-              <label className="block text-xs font-mono uppercase text-slate-400 mb-1.5">
+              <label className="block text-xs font-mono uppercase text-zinc-400 mb-1.5">
                 App Archetype
               </label>
               <select
                 value={appType}
                 onChange={(e) => setAppType(e.target.value)}
-                className="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-3 py-2.5 text-xs text-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 font-mono"
+                className="authkit-input w-full rounded-xl px-3 py-2.5 text-xs text-zinc-200 font-mono"
               >
                 <option value="api">REST / GraphQL API</option>
                 <option value="serverless">Serverless Microservice</option>
@@ -271,13 +271,13 @@ export const AuditForm: React.FC<AuditFormProps> = ({
             </div>
 
             <div>
-              <label className="block text-xs font-mono uppercase text-slate-400 mb-1.5">
+              <label className="block text-xs font-mono uppercase text-zinc-400 mb-1.5">
                 Service
               </label>
               <select
                 value={service}
                 onChange={(e) => setService(e.target.value)}
-                className="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-3 py-2.5 text-xs text-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 font-mono"
+                className="authkit-input w-full rounded-xl px-3 py-2.5 text-xs text-zinc-200 font-mono"
               >
                 <option value="apigateway">API Gateway</option>
                 <option value="lambda">Lambda Function URL</option>
@@ -289,7 +289,7 @@ export const AuditForm: React.FC<AuditFormProps> = ({
           <button
             type="submit"
             disabled={isLoading || !targetUrl.trim()}
-            className="w-full mt-2 py-3.5 px-6 rounded-xl font-bold text-sm bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 text-slate-950 hover:brightness-110 active:brightness-95 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-emerald-500/20 flex items-center justify-center space-x-2 transition-all"
+            className="authkit-btn-primary w-full mt-2 py-3.5 px-6 rounded-xl font-bold text-sm flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
           >
             {isLoading ? (
               <>

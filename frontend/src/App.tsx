@@ -8,7 +8,7 @@ import { FindingsList } from './components/FindingsList'
 import { TelemetryView } from './components/TelemetryView'
 import { RemediationModal } from './components/RemediationModal'
 import type { AuditReport, SwarmEvent, BuildRequest, ArchitectureTopology, BuildReport } from './types'
-import { AlertCircle } from 'lucide-react'
+import { AlertCircle, Sparkles } from 'lucide-react'
 
 export const App: React.FC = () => {
   const [events, setEvents] = useState<SwarmEvent[]>([])
@@ -71,22 +71,18 @@ export const App: React.FC = () => {
                 setActiveAgent(eventObj.agent_name)
               }
 
-              // Capture topology if emitted by Sentinel-Architect
               if (eventObj.payload?.services && eventObj.payload?.architecture_name) {
                 setTopology(eventObj.payload as ArchitectureTopology)
               }
 
-              // Capture template if emitted by Agent-InfraEngine
               if (eventObj.payload?.cloudformation_template) {
                 setCfTemplate(eventObj.payload.cloudformation_template)
               }
 
-              // Capture deployed endpoint
               if (eventObj.payload?.endpoint_url) {
                 setDeployedEndpoint(eventObj.payload.endpoint_url)
               }
 
-              // Capture complete build report
               if (eventObj.event_type === 'complete' && eventObj.payload) {
                 const bReport = eventObj.payload as BuildReport
                 if (bReport.topology) setTopology(bReport.topology)
@@ -187,37 +183,43 @@ export const App: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans">
+    <div className="authkit-bg min-h-screen text-zinc-100 flex flex-col font-sans">
       <Header />
 
-      <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 space-y-8">
-        {/* Hero Section */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800/80 pb-6">
-          <div>
-            <div className="inline-flex items-center space-x-2 text-xs font-mono text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20 mb-2">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-              <span>AWS Zero to Shipped Hackathon Showcase</span>
-            </div>
-            <h1 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
-              ShipSwarm AI
-            </h1>
-            <p className="text-sm text-slate-400 mt-1 max-w-2xl">
-              From Idea or GitHub Repo to a fully provisioned, live AWS infrastructure with closed-loop multi-agent security and stress verification.
-            </p>
-          </div>
+      <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-10 space-y-10">
+        {/* AuthKit Hero Section with Precision Crosshairs */}
+        <div className="relative border-b border-white/[0.08] pb-8">
+          <span className="absolute -bottom-2 -left-2 text-xs text-zinc-600 font-mono select-none">+</span>
+          <span className="absolute -bottom-2 -right-2 text-xs text-zinc-600 font-mono select-none">+</span>
 
-          <div className="flex items-center space-x-3 text-xs font-mono text-slate-400 bg-slate-900/80 p-3 rounded-xl border border-slate-800">
-            <div>
-              <span className="text-slate-500 block">Framework:</span>
-              <span className="text-white font-bold">AWS Strands SDK (Swarm)</span>
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div className="space-y-3">
+              <div className="inline-flex items-center space-x-2 text-xs font-mono text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20 shadow-[0_0_12px_rgba(16,185,129,0.2)]">
+                <Sparkles className="h-3 w-3" />
+                <span>AWS Zero to Shipped Hackathon</span>
+              </div>
+              <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight bg-gradient-to-b from-white via-zinc-100 to-zinc-400 bg-clip-text text-transparent">
+                Autonomous Cloud Engine
+              </h1>
+              <p className="text-sm text-zinc-400 max-w-2xl leading-relaxed">
+                From idea or GitHub repository to a live, production-grade AWS infrastructure in minutes.
+                Powered by a peer-to-peer swarm of AWS Strands agents and Amazon Bedrock.
+              </p>
             </div>
-            <div className="border-l border-slate-800 pl-3">
-              <span className="text-slate-500 block">Deployer:</span>
-              <span className="text-white font-bold">AWS CloudFormation</span>
-            </div>
-            <div className="border-l border-slate-800 pl-3">
-              <span className="text-slate-500 block">LLM Engine:</span>
-              <span className="text-white font-bold">Amazon Bedrock</span>
+
+            <div className="flex items-center space-x-3 text-xs font-mono text-zinc-400 bg-zinc-950/70 p-3.5 rounded-xl border border-white/[0.08] shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
+              <div>
+                <span className="text-zinc-500 block text-[10px] uppercase">Engine</span>
+                <span className="text-white font-bold">AWS Strands Swarm</span>
+              </div>
+              <div className="border-l border-white/[0.08] pl-3">
+                <span className="text-zinc-500 block text-[10px] uppercase">IaC Deployer</span>
+                <span className="text-white font-bold">CloudFormation</span>
+              </div>
+              <div className="border-l border-white/[0.08] pl-3">
+                <span className="text-zinc-500 block text-[10px] uppercase">Reasoning</span>
+                <span className="text-white font-bold">Amazon Bedrock</span>
+              </div>
             </div>
           </div>
         </div>
@@ -287,7 +289,7 @@ export const App: React.FC = () => {
       )}
 
       {/* Footer */}
-      <footer className="border-t border-slate-800/80 bg-slate-950 py-6 text-center text-xs font-mono text-slate-500">
+      <footer className="border-t border-white/[0.06] bg-[#05070c]/90 py-6 text-center text-xs font-mono text-zinc-500">
         <p>Built for the AWS Zero to Shipped Hackathon • Powered by AWS Strands Agents SDK & Amazon Bedrock</p>
       </footer>
     </div>
